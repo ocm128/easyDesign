@@ -7,14 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-  <p class="notice" style="<%= "display:none;" if notice.nil? %>"><%= notice %></p>
-  <p class="alert" style="<%= "display:none;" if alert.nil? %>"><%= alert %></p>
+    <p class="notice" style="<%= "display:none;" if alert.nil? %>"><%= notice %></p>
+    <p class="alert" style="<%= "display:none;" if alert.nil? %>"><%= alert %></p>
   <header>
     <nav>
       <ul class="nav nav-tabs">
         <li>
           <%= link_to "Inicio", root_path %>
+        </li>
+        <li>
+          <%= link_to "Posts", posts_path %>
         </li>
         <% if usuario_signed_in? %>
           <li>
@@ -22,6 +24,9 @@
           </li>
           <li>
             <%= link_to "Cerrar sesión", destroy_usuario_session_path, method: :delete %>
+          </li>
+          <li>
+            <%= link_to "Mi perfil", current_usuario %>
           </li>
         <% else %>
           <li>

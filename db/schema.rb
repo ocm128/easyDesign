@@ -11,7 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225191842) do
+ActiveRecord::Schema.define(version: 20160229191954) do
+
+  create_table "attachments", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "extension"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "attachments", ["post_id"], name: "index_attachments_on_post_id"
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "usuario_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "friendships", ["friend_id"], name: "index_friendships_on_friend_id"
+  add_index "friendships", ["usuario_id"], name: "index_friendships_on_usuario_id"
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "titulo"
+    t.text     "contenido"
+    t.string   "extension"
+    t.integer  "usuario_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "posts", ["usuario_id"], name: "index_posts_on_usuario_id"
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -33,7 +64,6 @@ ActiveRecord::Schema.define(version: 20160225191842) do
     t.string   "uid"
   end
 
-  add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true
 
 end

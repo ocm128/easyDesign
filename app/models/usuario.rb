@@ -7,13 +7,32 @@ class Usuario < ActiveRecord::Base
   devise :omniauthable, omniauth_providers: [:facebook, :twitter]
 
   validates :username, presence: true, uniqueness: true,
-                  length: {in: 5..20, too_short: "tiene que tener al menos 5 caracteres",
-                  too_long: "Puede tener máximo 20 caracteres"},
+                  length: {in: 5..10, too_short: "tiene que tener al menos 5 caracteres",
+                  too_long: "Puede tener máximo 10 caracteres"},
                   format: {with: /([A-Za-z0-9\-\_]+)/, message: "sólo puede contener letras,
                    números y guiones"}
 
   # validate permite validaciones personalizadas
   #validate :validacion_personalizada, on: :create
+
+  has_many :posts
+  has_many :friendships
+  has_many :follows, through: :friendships, source: :friend
+  has_many :followers_friendships, class_name: "Friendship", foreign_key: "friend_id"
+  has_many :followers, through: :followers_friendships, source: :usuario
+
+  def follow!(amigo_id)  # Modifica
+    friendships.create(friend_id: amigo_id)
+  end
+
+  # No puede seguirse a uno mismo o que ya exista la relación (devuelve mayor de 0)
+  def can_follow?(amigo_id)
+    not amigo_id == self.id or friendships.where(friend_id: amigo_id).size > 0
+  end
+
+  def email_required?
+    false
+  end
 
   def self.find_or_create_by_omniauth(auth)
     usuario = Usuario.where(provider: auth[:provider], uid: auth[:uid]).first
@@ -30,6 +49,7 @@ class Usuario < ActiveRecord::Base
         password: Devise.friendly_token[0,20]
         )
     end
+    usuario
   end
 
   private

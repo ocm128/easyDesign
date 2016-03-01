@@ -2,7 +2,7 @@ class OmniauthCallbacksController < ApplicationController
 
   def facebook
     auth = request.env["omniauth.auth"]
-    raise auth.to_yaml
+    #raise auth.to_yaml
 
     data = {
       nombre: auth.info.first_name,
