@@ -22,6 +22,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 
+# PublicActivity maneja el feed
+gem 'public_activity'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
