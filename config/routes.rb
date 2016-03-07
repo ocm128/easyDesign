@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+  # Al entrar a dominio/carrito redirige al controlador payments y acción carrito
+  get '/carrito', to: 'payments#carrito'
+  get '/compras', to: 'payments#compras'
+  get 'payments/express'
+  get 'transactions/checkout'
   resources :attachments
+  resources :payments
   resources :posts
 
   # registrations es el controlador registrations_controller de Devise, omniauth_callbacks

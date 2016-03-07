@@ -20,6 +20,12 @@
         </li>
         <% if usuario_signed_in? %>
           <li>
+            <%= link_to "Mi carrito", carrito_path %>
+          </li>
+          <li>
+            <%= link_to "Mis compras", compras_path %>
+          </li>
+          <li>
             <%= link_to "Editar Pefil", edit_usuario_registration_path(current_usuario) %>
           </li>
           <li>

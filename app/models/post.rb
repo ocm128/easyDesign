@@ -3,21 +3,19 @@ class Post < ActiveRecord::Base
   include Picturable  # Concern Picturable para permitir subir imágenes
   #include Trackable # Concern Trackable para permitir trackear las acciones de los usuarios
 
-  # Registrará cada vez que se cree, actualice o elimine un post
-  #include PublicActivity::Model
- # tracked owner: Proc.new{ |controller, model| controller.current_usuario }
-
   belongs_to :usuario, dependent: :destroy
   has_many :attachments
+  has_many :payments
   validates :titulo, presence: true, uniqueness: true
   before_save :valores_por_default
 
-  # #include PublicActivity::Model
-  # #tracked owner: Proc.new { |controller,model| controller.current_usuario }
-  # after_create {|post| post.message 'create'}
+  # Registrará cada vez que se cree, actualice o elimine un post
+  include PublicActivity::Model
+  tracked owner: Proc.new { |controller,model| controller.current_usuario }
+  #after_create {|post| post.message 'create'}
 
   # def message action
-  #   msg = {
+  #  msg = {
   #     resource: 'posts',
   #     action: action,
   #     id: self.id,
@@ -25,7 +23,7 @@ class Post < ActiveRecord::Base
   #     username: self.usuario.username.capitalize,
   #     user_id: self.usuario.id
 
-  #   }
+  #  }
   #   $redis.publish 'rt-change', msg.to_json
   # end
 

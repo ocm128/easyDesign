@@ -21,9 +21,16 @@ gem 'font-awesome-rails'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'jquery-tmpl-rails'
+
+# permite conectar con redis
+gem 'redis'
 
 # PublicActivity maneja el feed
 gem 'public_activity'
+
+# ActiveMerchant para manejar los pagos
+gem 'activemerchant'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

@@ -20,6 +20,8 @@ class Usuario < ActiveRecord::Base
   has_many :follows, through: :friendships, source: :friend
   has_many :followers_friendships, class_name: "Friendship", foreign_key: "friend_id"
   has_many :followers, through: :followers_friendships, source: :usuario
+  has_many :payments
+  has_many :transactions
 
   def follow!(amigo_id)  # Modifica
     friendships.create(friend_id: amigo_id)
@@ -28,6 +30,10 @@ class Usuario < ActiveRecord::Base
   # No puede seguirse a uno mismo o que ya exista la relación (devuelve mayor de 0)
   def can_follow?(amigo_id)
     not amigo_id == self.id or friendships.where(friend_id: amigo_id).size > 0
+  end
+
+  def costo_compra_pendiente
+    payments.where(estado: 1).joins("INNER JOIN posts on posts.id == payments.post_id").sum("costo")
   end
 
   def email_required?
