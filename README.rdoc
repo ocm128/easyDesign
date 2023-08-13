@@ -1,5 +1,5 @@
 
-Esta aplicación de Ruby on Rails es el ejemplo que se utiliza en el curso "Backend avanzado con Ruby on rails 4" impartido por Uriel Hernandez en codigofacilito.com
+Esta aplicación de Ruby on Rails es el ejemplo que se utiliza en el curso "Backend avanzado con Ruby on rails 4" impartido por Uriel Hernandez en codigofacilito.com.
 
 
 
